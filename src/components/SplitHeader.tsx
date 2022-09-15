@@ -4,10 +4,8 @@ import logo from "../assets/logocurr.png";
 export const SplitHeader = () => {
   return (
     <StyledSplitHeader>
-      <LogoCurrency alt="logo" src={logo} />
-      <Active className="active" href="/currencies">
-        € Currencies
-      </Active>
+      <Logo alt="logo" src={logo} />
+      <Home href="/currencies">€ Currencies</Home>
     </StyledSplitHeader>
   );
 };
@@ -25,11 +23,11 @@ const StyledSplitHeader = styled.div`
   );
 `;
 
-const LogoCurrency = styled.img`
+const Logo = styled.img`
   margin-left: -600px;
 `;
 
-const Active = styled.a`
+const Home = styled.a`
 margin-left: 500px;
 float: left;
 color: #f2f2f2;
