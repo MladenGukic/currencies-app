@@ -1,24 +1,79 @@
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import styled from "styled-components";
 
 export const AddEditCurrency = () => {
+  const CurrencySchema = Yup.object().shape({
+    currencyCode: Yup.string()
+      .required("This field is required.")
+      .test("len", "Must be exactly 3 characters.", (val) => val?.length === 3),
+
+    currencySymbol: Yup.string()
+      .required("This field is required.")
+      .test("len", "Must be exactly 1 symbol.", (val) => val?.length === 1),
+  });
+
+  const formik = useFormik({
+    initialValues: { currencyCode: "", currencySymbol: "" },
+    onSubmit: () => {
+      checkIsItWork();
+    },
+    validationSchema: CurrencySchema,
+    validateOnMount: true,
+  });
+
+  const {
+    handleChange,
+    errors,
+    touched,
+    handleBlur,
+    handleSubmit,
+    values,
+    isValid,
+  } = formik;
+  const checkIsItWork = () => {
+    console.log(values);
+  };
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <Title>Add Currency</Title>
       <AddEditDiv>
         <Label>Currency Code</Label>
-        <Input />
+        <Input
+          name="currencyCode"
+          className={!isValid && touched.currencyCode ? "error" : ""}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.currencyCode}
+        />
+        {!isValid && touched.currencyCode && (
+          <Error> {errors.currencyCode} </Error>
+        )}
       </AddEditDiv>
       <AddEditDiv>
         <Label>Currency symbol</Label>
-        <Input />
+        <Input
+          name="currencySymbol"
+          className={!isValid && touched.currencySymbol ? "error" : ""}
+          value={values.currencySymbol}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+        {!isValid && touched.currencySymbol && (
+          <Error> {errors.currencySymbol} </Error>
+        )}
       </AddEditDiv>
-      <Button>SUBMIT</Button>
+      <Button type="submit">SUBMIT</Button>
     </form>
   );
 };
 
 const AddEditDiv = styled.div`
   border-bottom: 1px solid #d8d8d8;
+
+  .error {
+    background-color: #ffccba;
+  }
 `;
 
 // const AddEditForm = styled.form``;
@@ -56,4 +111,9 @@ const Button = styled.button`
   font-weight: 500;
   margin-top: 12px;
   margin-left: 743px;
+`;
+
+const Error = styled.p`
+  color: #d63301;
+  margin-left: 465px;
 `;
