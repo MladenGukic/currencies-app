@@ -21,6 +21,8 @@ export const AddEditCurrency = () => {
     initialValues: { currencyCode: "", currencySymbol: "" },
     onSubmit: () => {
       currenciesContext.addCurrency(values.currencyCode, values.currencySymbol);
+      values.currencyCode = "";
+      values.currencySymbol = "";
     },
     validationSchema: CurrencySchema,
     validateOnMount: true,
