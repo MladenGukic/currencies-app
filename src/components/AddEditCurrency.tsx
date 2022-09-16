@@ -1,8 +1,12 @@
+import { useContext } from "react";
 import { useFormik } from "formik";
+import { CurrenciesContext } from "../store/currencies-context";
 import * as Yup from "yup";
 import styled from "styled-components";
 
 export const AddEditCurrency = () => {
+  const currenciesContext = useContext(CurrenciesContext);
+
   const CurrencySchema = Yup.object().shape({
     currencyCode: Yup.string()
       .required("This field is required.")
@@ -16,7 +20,7 @@ export const AddEditCurrency = () => {
   const formik = useFormik({
     initialValues: { currencyCode: "", currencySymbol: "" },
     onSubmit: () => {
-      checkIsItWork();
+      currenciesContext.addCurrency(values.currencyCode, values.currencySymbol);
     },
     validationSchema: CurrencySchema,
     validateOnMount: true,
@@ -31,9 +35,7 @@ export const AddEditCurrency = () => {
     values,
     isValid,
   } = formik;
-  const checkIsItWork = () => {
-    console.log(values);
-  };
+
   return (
     <form onSubmit={handleSubmit}>
       <Title>Add Currency</Title>
