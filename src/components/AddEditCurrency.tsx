@@ -7,9 +7,23 @@ import styled from "styled-components";
 export const AddEditCurrency = () => {
   const currenciesContext = useContext(CurrenciesContext);
 
+  const uniqueChecker = (val?: string) => {
+    for (let i = 0; i <= currenciesContext.currencies.length; i++) {
+      if (currenciesContext.currencies[i].currencyCode === val) {
+        return false;
+      }
+      return true;
+    }
+  };
+
   const CurrencySchema = Yup.object().shape({
     currencyCode: Yup.string()
       .required("This field is required.")
+      .test(
+        "unique",
+        "The currency already exists.",
+        (val) => uniqueChecker(val)!
+      )
       .test("len", "Must be exactly 3 characters.", (val) => val?.length === 3),
 
     currencySymbol: Yup.string()
@@ -76,7 +90,7 @@ export const StyledDiv = styled.div`
   border-bottom: 1px solid #d8d8d8;
 
   .error {
-    background-color: #ffccba;
+    border: 2px solid #ff6600;
   }
 `;
 
@@ -122,6 +136,8 @@ const Button = styled.button`
 `;
 
 const Error = styled.p`
-  color: #d63301;
+  font-size: 17px;
+  color: #ff6600;
   margin-left: 465px;
+  margin-top: 0px;
 `;
