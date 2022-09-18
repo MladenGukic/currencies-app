@@ -39,9 +39,9 @@ export const AddEditCurrency = () => {
   } = formik;
 
   return (
-    <form onSubmit={handleSubmit}>
+    <AddEditForm onSubmit={handleSubmit}>
       <Title>Add Currency</Title>
-      <AddEditDiv>
+      <StyledDiv>
         <Label>Currency Code</Label>
         <Input
           name="currencyCode"
@@ -53,8 +53,8 @@ export const AddEditCurrency = () => {
         {!isValid && touched.currencyCode && (
           <Error> {errors.currencyCode} </Error>
         )}
-      </AddEditDiv>
-      <AddEditDiv>
+      </StyledDiv>
+      <StyledDiv>
         <Label>Currency symbol</Label>
         <Input
           name="currencySymbol"
@@ -66,13 +66,13 @@ export const AddEditCurrency = () => {
         {!isValid && touched.currencySymbol && (
           <Error> {errors.currencySymbol} </Error>
         )}
-      </AddEditDiv>
+      </StyledDiv>
       <Button type="submit">SUBMIT</Button>
-    </form>
+    </AddEditForm>
   );
 };
 
-const AddEditDiv = styled.div`
+export const StyledDiv = styled.div`
   border-bottom: 1px solid #d8d8d8;
 
   .error {
@@ -80,9 +80,13 @@ const AddEditDiv = styled.div`
   }
 `;
 
-// const AddEditForm = styled.form``;
+const AddEditForm = styled.form`
+  display: inline-block;
+  margin-left: 480px;
+  padding-left: 30px;
+`;
 
-const Title = styled.h3`
+export const Title = styled.h3`
   font-weight: normal;
   border-bottom: 1px solid #ff6600;
   color: #ff6600;
