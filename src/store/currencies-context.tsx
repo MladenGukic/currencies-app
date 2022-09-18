@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Currency } from "../models/currency";
 
 type CurrenciesContextObject = {
@@ -29,6 +29,10 @@ export const CurrenciesContextProvider = (props: CurrenciesProps) => {
     currencies: currencies,
     addCurrency: addCurrencyHandler,
   };
+
+  useEffect(() => {
+    localStorage.setItem("currencies", JSON.stringify(currencies));
+  }, [currencies]);
 
   return (
     <CurrenciesContext.Provider value={contextValue}>
