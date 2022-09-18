@@ -16,13 +16,17 @@ export const CurrenciesContext = React.createContext<CurrenciesContextObject>({
 });
 
 export const CurrenciesContextProvider = (props: CurrenciesProps) => {
-  const [currencies, setCurrencies] = useState<Currency[]>(DUMMY_CURRENCIES);
+  const [currencies, setCurrencies] = useState<Currency[]>(
+    JSON.parse(localStorage.getItem("currencies") || "[]")
+  );
 
   const addCurrencyHandler = (currencyCode: string, currencySymbol: string) => {
     const newCurrency = new Currency(currencyCode, currencySymbol);
 
     setCurrencies((prevCurrencies) => {
-      return prevCurrencies.concat(newCurrency);
+      const newCurrencies = prevCurrencies.concat(newCurrency);
+      localStorage.setItem("currencies", JSON.stringify(newCurrencies));
+      return JSON.parse(localStorage.getItem("currencies") || "[]");
     });
   };
 
@@ -32,9 +36,8 @@ export const CurrenciesContextProvider = (props: CurrenciesProps) => {
   };
 
   useEffect(() => {
-    localStorage.setItem("currencies", JSON.stringify(currencies));
-    setCurrencies(JSON.parse(localStorage.getItem("currencies") || "[]"));
-  }, [currencies]);
+    localStorage.setItem("currencies", JSON.stringify(DUMMY_CURRENCIES));
+  }, []);
 
   return (
     <CurrenciesContext.Provider value={contextValue}>
