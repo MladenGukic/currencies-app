@@ -1,7 +1,7 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import { SplitHeader } from "./components/SplitHeader";
 import { AddEditCurrency } from "./components/AddEditCurrency";
-import { SidebarCurrencies } from './components/SidebarCurrencies';
+import { SidebarCurrencies } from "./components/SidebarCurrencies";
 import { CurrenciesContextProvider } from "./store/currencies-context";
 
 function App() {
