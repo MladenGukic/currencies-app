@@ -1,39 +1,42 @@
 import styled from "styled-components";
-import logo from "../assets/logocurr.png";
 
 export const SplitHeader = () => {
   return (
     <StyledSplitHeader>
-      <Logo alt="logo" src={logo} />
-      <Home href="/currencies">€ Currencies</Home>
+
+      <LogoWrapper>
+        <Logo alt="logo" src={"/logocurr.png"} />
+      </LogoWrapper>
+      <HeaderWrapper>
+        <Home href="/currencies">€ Currencies</Home>
+      </HeaderWrapper>
     </StyledSplitHeader>
   );
 };
 
 const StyledSplitHeader = styled.div`
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  overflow: hidden;
-  background: linear-gradient(
-    to right,
-    #e35b00 0px,
-    #e35b00 480px,
-    #ff6600 480px,
-    #ff6600 1265px
-  );
+  background: #FF6500;
+  display: flex;
+  align-items: center;  
 `;
 
 const Logo = styled.img`
-  margin-left: -600px;
+    margin-left: 20px;
 `;
 
 const Home = styled.a`
-margin-left: 500px;
-float: left;
-color: #f2f2f2;
-text-align: center;
-padding: 14px 16px;
-text-decoration: none;
-font-size: 17px;
-}
+  color: #f2f2f2;
+  text-align: center;
+  text-decoration: none;
+  font-size: 17px;
 `;
+
+const LogoWrapper = styled.div`
+  background: #E35B00;
+  width: 420px;
+`
+
+const HeaderWrapper = styled.div`
+  background: #FF6500;
+  margin-left: 20px;
+`

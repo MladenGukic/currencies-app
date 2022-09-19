@@ -3,25 +3,17 @@ import { useFormik } from "formik";
 import { CurrenciesContext } from "../store/currencies-context";
 import * as Yup from "yup";
 import styled from "styled-components";
+import { uniqueChecker } from "../utils";
 
 export const AddEditCurrency = () => {
-  const currenciesContext = useContext(CurrenciesContext);
-
-  const uniqueChecker = (val?: string) => {
-    const userExists = currenciesContext.currencies.some((curr) => {
-      return curr.currencyCode === val?.toUpperCase();
-    });
-    return !userExists;
-  };
+  const { currencies, addCurrency } = useContext(CurrenciesContext);
 
   const CurrencySchema = Yup.object().shape({
     currencyCode: Yup.string()
       .required("This field is required.")
       .test("len", "Must be exactly 3 characters.", (val) => val?.length === 3)
-      .test(
-        "unique",
-        "The currency already exists.",
-        (val) => uniqueChecker(val)!
+      .test("unique", "The currency already exists.", (val) =>
+        uniqueChecker(currencies, val),
       ),
 
     currencySymbol: Yup.string()
@@ -32,7 +24,7 @@ export const AddEditCurrency = () => {
   const formik = useFormik({
     initialValues: { currencyCode: "", currencySymbol: "" },
     onSubmit: () => {
-      currenciesContext.addCurrency(values.currencyCode, values.currencySymbol);
+      addCurrency(values.currencyCode, values.currencySymbol);
       values.currencyCode = "";
       values.currencySymbol = "";
     },
@@ -94,7 +86,6 @@ export const StyledDiv = styled.div`
 
 const AddEditForm = styled.form`
   display: inline-block;
-  margin-left: 480px;
   padding-left: 30px;
 `;
 
@@ -130,12 +121,11 @@ export const Button = styled.button`
   border-radius: 5px;
   font-weight: 500;
   margin-top: 12px;
-  margin-left: 743px;
+  text-transform: uppercase;
 `;
 
 const Error = styled.p`
   font-size: 17px;
   color: #ff6600;
-  margin-left: 465px;
   margin-top: 0px;
 `;
