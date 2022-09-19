@@ -24,6 +24,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/currencies" />} />
           <Route path="currencies/add" element={<AddEditCurrency />} />
+          <Route path="currencies/edit/:id" element={<AddEditCurrency />} />
         </Routes>
       </ContentWrapper>
 
