@@ -8,23 +8,21 @@ export const AddEditCurrency = () => {
   const currenciesContext = useContext(CurrenciesContext);
 
   const uniqueChecker = (val?: string) => {
-    for (let i = 0; i <= currenciesContext.currencies.length; i++) {
-      if (currenciesContext.currencies[i].currencyCode === val) {
-        return false;
-      }
-      return true;
-    }
+    const userExists = currenciesContext.currencies.some((curr) => {
+      return curr.currencyCode === val?.toUpperCase();
+    });
+    return !userExists;
   };
 
   const CurrencySchema = Yup.object().shape({
     currencyCode: Yup.string()
       .required("This field is required.")
+      .test("len", "Must be exactly 3 characters.", (val) => val?.length === 3)
       .test(
         "unique",
         "The currency already exists.",
-        (val) => uniqueChecker(val?.toUpperCase())!
-      )
-      .test("len", "Must be exactly 3 characters.", (val) => val?.length === 3),
+        (val) => uniqueChecker(val)!
+      ),
 
     currencySymbol: Yup.string()
       .required("This field is required.")
