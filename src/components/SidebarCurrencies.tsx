@@ -3,8 +3,8 @@ import { Currency } from "../models/currency";
 import { Title } from "./AddEditCurrency";
 import { StyledDiv } from "./AddEditCurrency";
 import { CurrenciesContext } from "../store/currencies-context";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 export const SidebarCurrencies = () => {
   const currenciesContext = useContext(CurrenciesContext);
@@ -13,8 +13,13 @@ export const SidebarCurrencies = () => {
       <Title>Currency List</Title>
       {currenciesContext.currencies.map((currency: Currency) => (
         <StyledDiv className="listElement" key={currency.id}>
-          {" "}
-          {currency.currencyCode}{" "}
+          {currency.currencyCode}
+          <DeleteButton
+            className="hide"
+            onClick={() => currenciesContext.removeCurrency(currency.id)}
+          >
+            Delete
+          </DeleteButton>
         </StyledDiv>
       ))}
       <StyledDiv className="listElement">
@@ -40,6 +45,14 @@ const Sidebar = styled.aside`
     padding-top: 25px;
     padding-bottom: 22px;
   }
+
+  .hide {
+    display: none;
+  }
+
+  .listElement:hover .hide {
+    display: block;
+  }
 `;
 
 const StyledLink = styled(Link)`
@@ -55,4 +68,13 @@ const Circle = styled.button`
   border-radius: 100%;
   margin: 4px;
   font-weight: 900;
+`;
+
+const DeleteButton = styled.button`
+  font-size: 17px;
+  float: right;
+  padding-right: 0px;
+  color: #aba5a5;
+  background-color: #eeeeee;
+  border: none;
 `;

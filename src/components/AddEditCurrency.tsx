@@ -22,7 +22,7 @@ export const AddEditCurrency = () => {
       .test(
         "unique",
         "The currency already exists.",
-        (val) => uniqueChecker(val)!
+        (val) => uniqueChecker(val?.toUpperCase())!
       )
       .test("len", "Must be exactly 3 characters.", (val) => val?.length === 3),
 
@@ -123,7 +123,7 @@ const Input = styled.input`
   margin-top: 12px;
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
   width: 160px;
   height: 40px;
   color: white;
