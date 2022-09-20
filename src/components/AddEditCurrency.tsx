@@ -74,7 +74,7 @@ export const AddEditCurrency = () => {
 
   return (
     <AddEditForm onSubmit={handleSubmit}>
-      <Title>Add Currency</Title>
+      <Title>{isEditing ? "Edit Currency" : "Add Currency"}</Title>
       <StyledDiv>
         <Label>Currency Code</Label>
         <Input
@@ -101,7 +101,7 @@ export const AddEditCurrency = () => {
           <Error> {errors.currencySymbol} </Error>
         )}
       </StyledDiv>
-      <Button type="submit">SUBMIT</Button>
+      <Button type="submit">{isEditing ? "SAVE" : "SUBMIT"}</Button>
     </AddEditForm>
   );
 };
