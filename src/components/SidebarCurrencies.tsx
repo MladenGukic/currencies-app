@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { CurrenciesContext } from "../store/currencies-context";
 import { Currency } from "../utils";
@@ -7,12 +7,19 @@ import { StyledDiv, Title } from "./AddEditCurrency";
 
 export const SidebarCurrencies = () => {
   const { currencies, removeCurrency } = useContext(CurrenciesContext);
+  const navigate = useNavigate();
+  const navigateToEdit = (id: string) =>
+    navigate(`/currencies/edit/${id}`, { replace: true });
 
   return (
     <Sidebar>
       <Title>Currency List</Title>
       {currencies.map((currency: Currency) => (
-        <StyledDiv className="listElement" key={currency.id}>
+        <StyledDiv
+          className="listElement"
+          key={currency.id}
+          onClick={() => navigateToEdit(currency.id)}
+        >
           {currency.currencyCode}
           <DeleteButton
             className="hide"

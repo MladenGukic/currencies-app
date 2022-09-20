@@ -1,19 +1,27 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { CurrenciesContext } from "../store/currencies-context";
 import * as Yup from "yup";
 import styled from "styled-components";
 import { uniqueChecker } from "../utils";
+import { useParams } from "react-router-dom";
 
 export const AddEditCurrency = () => {
-  const { currencies, addCurrency } = useContext(CurrenciesContext);
+  const { currencies, addCurrency, editCurrency } =
+    useContext(CurrenciesContext);
+  const { id } = useParams();
+  const isEditing = id !== undefined;
+
+  const [editingCurrency, setEditingCurrency] = useState(
+    currencies?.find((curr) => curr.id === id),
+  );
 
   const CurrencySchema = Yup.object().shape({
     currencyCode: Yup.string()
       .required("This field is required.")
       .test("len", "Must be exactly 3 characters.", (val) => val?.length === 3)
       .test("unique", "The currency already exists.", (val) =>
-        uniqueChecker(currencies, val),
+        isEditing ? true : uniqueChecker(currencies, val),
       ),
 
     currencySymbol: Yup.string()
@@ -22,11 +30,24 @@ export const AddEditCurrency = () => {
   });
 
   const formik = useFormik({
-    initialValues: { currencyCode: "", currencySymbol: "" },
+    initialValues: {
+      currencyCode: "",
+      currencySymbol: "",
+    },
     onSubmit: () => {
-      addCurrency(values.currencyCode, values.currencySymbol);
-      values.currencyCode = "";
-      values.currencySymbol = "";
+      if (!isEditing) {
+        addCurrency(values.currencyCode, values.currencySymbol);
+        values.currencyCode = "";
+        values.currencySymbol = "";
+      } else {
+        editCurrency({
+          id: id,
+          currencyCode: values.currencyCode.toUpperCase(),
+          currencySymbol: values.currencySymbol,
+        });
+        values.currencyCode = "";
+        values.currencySymbol = "";
+      }
     },
     validationSchema: CurrencySchema,
     validateOnMount: true,
@@ -40,7 +61,16 @@ export const AddEditCurrency = () => {
     handleSubmit,
     values,
     isValid,
+    setValues,
   } = formik;
+
+  useEffect(() => {
+    setEditingCurrency(currencies?.find((curr) => curr.id === id));
+    setValues({
+      currencyCode: isEditing ? String(editingCurrency?.currencyCode) : "",
+      currencySymbol: isEditing ? String(editingCurrency?.currencySymbol) : "",
+    });
+  }, [editingCurrency, id]);
 
   return (
     <AddEditForm onSubmit={handleSubmit}>
