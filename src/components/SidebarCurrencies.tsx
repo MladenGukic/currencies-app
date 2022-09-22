@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { CurrenciesContext } from "../store/currencies-context";
 import { Currency } from "../utils";
-import { StyledDiv, Title } from "./AddEditCurrency";
 
 export const SidebarCurrencies = () => {
   const { currencies, removeCurrency } = useContext(CurrenciesContext);
@@ -61,6 +60,14 @@ const Sidebar = styled.aside`
   }
 `;
 
+const StyledDiv = styled.div`
+  border-bottom: 1px solid #d8d8d8;
+
+  .error {
+    border: 2px solid #ff6600;
+  }
+`;
+
 const StyledLink = styled(Link)`
   color: #ff6600;
   text-decoration: none;
@@ -83,4 +90,14 @@ const DeleteButton = styled.button`
   color: #aba5a5;
   background-color: #eeeeee;
   border: none;
+`;
+
+const Title = styled.h3`
+  font-weight: normal;
+  border-bottom: 1px solid #ff6600;
+  color: #ff6600;
+  padding-bottom: 12px;
+  margin-top: 30px;
+  margin-bottom: 0px;
+  display: block;
 `;

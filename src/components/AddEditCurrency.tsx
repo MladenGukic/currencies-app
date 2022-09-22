@@ -106,7 +106,7 @@ export const AddEditCurrency = () => {
   );
 };
 
-export const StyledDiv = styled.div`
+const StyledDiv = styled.div`
   border-bottom: 1px solid #d8d8d8;
 
   .error {
@@ -115,11 +115,12 @@ export const StyledDiv = styled.div`
 `;
 
 const AddEditForm = styled.form`
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
   padding-left: 30px;
 `;
 
-export const Title = styled.h3`
+const Title = styled.h3`
   font-weight: normal;
   border-bottom: 1px solid #ff6600;
   color: #ff6600;
@@ -152,6 +153,7 @@ export const Button = styled.button`
   font-weight: 500;
   margin-top: 12px;
   text-transform: uppercase;
+  margin-left: auto;
 `;
 
 const Error = styled.p`

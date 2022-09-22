@@ -6,15 +6,6 @@ import { CurrenciesContextProvider } from "./store/currencies-context";
 import styled, { createGlobalStyle } from "styled-components";
 
 function App() {
-  const GlobalStyle = createGlobalStyle`
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-    * {
-      box-sizing: border-box;
-    }
-  }
-`;
-
   return (
     <CurrenciesContextProvider>
       <SplitHeader />
@@ -34,6 +25,15 @@ function App() {
 }
 
 export default App;
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    * {
+      box-sizing: border-box;
+    }
+  }
+`;
 
 const ContentWrapper = styled.div`
   display: flex;
