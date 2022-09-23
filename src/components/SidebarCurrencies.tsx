@@ -1,16 +1,11 @@
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { CurrenciesContext } from "../store/currencies-context";
 import { Currency } from "../utils";
 
-interface Props {
-  currencies: Currency[];
-  removeCurrency: (id: string) => void;
-}
-
-export const SidebarCurrencies: React.FC<Props> = ({
-  currencies,
-  removeCurrency,
-}) => {
+export const SidebarCurrencies = () => {
+  const { currencies, removeCurrency } = useContext(CurrenciesContext);
   const navigate = useNavigate();
   const navigateToEdit = (id: string) =>
     navigate(`/currencies/edit/${id}`, { replace: true });

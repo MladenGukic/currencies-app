@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const SplitHeader: React.FC = () => {
+export const SplitHeader = () => {
   return (
     <StyledSplitHeader>
       <LogoWrapper>

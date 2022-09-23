@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { uniqueChecker } from "../utils";
 import { useParams } from "react-router-dom";
 
-export const AddEditCurrency: React.FC = () => {
+export const AddEditCurrency = () => {
   const { currencies, addCurrency, editCurrency } =
     useContext(CurrenciesContext);
   const { id } = useParams();
