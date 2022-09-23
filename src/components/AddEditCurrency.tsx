@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { uniqueChecker } from "../utils";
 import { useParams } from "react-router-dom";
 
-export const AddEditCurrency = () => {
+export const AddEditCurrency: React.FC = () => {
   const { currencies, addCurrency, editCurrency } =
     useContext(CurrenciesContext);
   const { id } = useParams();
@@ -15,6 +15,11 @@ export const AddEditCurrency = () => {
   const [editingCurrency, setEditingCurrency] = useState(
     currencies?.find((curr) => curr.id === id),
   );
+
+  const resetInputs = () => {
+    values.currencyCode = "";
+    values.currencySymbol = "";
+  };
 
   const CurrencySchema = Yup.object().shape({
     currencyCode: Yup.string()
@@ -37,16 +42,14 @@ export const AddEditCurrency = () => {
     onSubmit: () => {
       if (!isEditing) {
         addCurrency(values.currencyCode, values.currencySymbol);
-        values.currencyCode = "";
-        values.currencySymbol = "";
+        resetInputs();
       } else {
         editCurrency({
           id: id,
           currencyCode: values.currencyCode.toUpperCase(),
           currencySymbol: values.currencySymbol,
         });
-        values.currencyCode = "";
-        values.currencySymbol = "";
+        resetInputs();
       }
     },
     validationSchema: CurrencySchema,
@@ -143,7 +146,7 @@ const Input = styled.input`
   margin-top: 12px;
 `;
 
-export const Button = styled.button`
+const Button = styled.button`
   width: 160px;
   height: 40px;
   color: white;

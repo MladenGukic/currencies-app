@@ -28,6 +28,12 @@ export const CurrenciesContextProvider = (props: CurrenciesProps) => {
     JSON.parse(localStorage.getItem("currencies") || "[]"),
   );
 
+
+  const storeInLocalStorage = (newCurrencies: Currency[]) => {
+    localStorage.setItem("currencies", JSON.stringify(newCurrencies));
+    return JSON.parse(localStorage.getItem("currencies") || "[]");
+  };
+
   const addCurrencyHandler = (currencyCode: string, currencySymbol: string) => {
     const newCurrency = new Currency(
       currencyCode.toUpperCase(),
@@ -36,16 +42,14 @@ export const CurrenciesContextProvider = (props: CurrenciesProps) => {
 
     setCurrencies((prevCurrencies) => {
       const newCurrencies = prevCurrencies.concat(newCurrency);
-      localStorage.setItem("currencies", JSON.stringify(newCurrencies));
-      return JSON.parse(localStorage.getItem("currencies") || "[]");
+      return storeInLocalStorage(newCurrencies);
     });
   };
 
   const removeCurrencyHandler = (id: string) => {
     setCurrencies((prevCurrencies) => {
       const newCurrencies = prevCurrencies.filter((curr) => curr.id !== id);
-      localStorage.setItem("currencies", JSON.stringify(newCurrencies));
-      return JSON.parse(localStorage.getItem("currencies") || "[]");
+      return storeInLocalStorage(newCurrencies);
     });
   };
 

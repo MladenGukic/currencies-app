@@ -2,16 +2,23 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { SplitHeader } from "./components/SplitHeader";
 import { AddEditCurrency } from "./components/AddEditCurrency";
 import { SidebarCurrencies } from "./components/SidebarCurrencies";
-import { CurrenciesContextProvider } from "./store/currencies-context";
+import {
+  CurrenciesContext,
+  CurrenciesContextProvider,
+} from "./store/currencies-context";
 import styled, { createGlobalStyle } from "styled-components";
+import { useContext } from "react";
 
 function App() {
+  const { currencies, removeCurrency } = useContext(CurrenciesContext);
   return (
     <CurrenciesContextProvider>
       <SplitHeader />
-
       <ContentWrapper>
-        <SidebarCurrencies />
+        <SidebarCurrencies
+          currencies={currencies}
+          removeCurrency={removeCurrency}
+        />
         <Routes>
           <Route path="/" element={<Navigate to="/currencies" />} />
           <Route path="currencies/add" element={<AddEditCurrency />} />

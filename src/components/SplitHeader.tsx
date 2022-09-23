@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
-export const SplitHeader = () => {
+export const SplitHeader: React.FC = () => {
   return (
     <StyledSplitHeader>
-
       <LogoWrapper>
         <Logo alt="logo" src={"/logocurr.png"} />
       </LogoWrapper>
@@ -15,13 +14,13 @@ export const SplitHeader = () => {
 };
 
 const StyledSplitHeader = styled.div`
-  background: #FF6500;
+  background: #ff6500;
   display: flex;
-  align-items: center;  
+  align-items: center;
 `;
 
 const Logo = styled.img`
-    margin-left: 20px;
+  margin-left: 20px;
 `;
 
 const Home = styled.a`
@@ -32,11 +31,11 @@ const Home = styled.a`
 `;
 
 const LogoWrapper = styled.div`
-  background: #E35B00;
+  background: #e35b00;
   width: 420px;
-`
+`;
 
 const HeaderWrapper = styled.div`
-  background: #FF6500;
+  background: #ff6500;
   margin-left: 20px;
-`
+`;
