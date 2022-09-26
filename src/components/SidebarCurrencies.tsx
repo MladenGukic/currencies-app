@@ -1,11 +1,15 @@
-import { useContext } from "react";
+import { FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { CurrenciesContext } from "../store/currencies-context";
 import { Currency } from "../utils";
 
-export const SidebarCurrencies = () => {
-  const { currencies, removeCurrency } = useContext(CurrenciesContext);
+type SidebarCurrenciesProps = {
+  currencies: Currency[];
+  removeCurrency: (id: string) => void;
+};
+
+export const SidebarCurrencies: FC<SidebarCurrenciesProps> = (props) => {
+  const { currencies, removeCurrency } = props;
   const navigate = useNavigate();
   const navigateToEdit = (id: string) =>
     navigate(`/currencies/edit/${id}`, { replace: true });
@@ -13,12 +17,13 @@ export const SidebarCurrencies = () => {
     <Sidebar>
       <Title>Currency List</Title>
       {currencies.map((currency: Currency) => (
-        <StyledDiv
-          className="listElement"
-          key={currency.id}
-          onClick={() => navigateToEdit(currency.id)}
-        >
-          {currency.currencyCode}
+        <StyledDiv key={currency.id}>
+          <div
+            className="listElement"
+            onClick={() => navigateToEdit(currency.id)}
+          >
+            {currency.currencyCode}
+          </div>
           <DeleteButton
             className="hide"
             onClick={() => removeCurrency(currency.id)}
@@ -48,22 +53,28 @@ const Sidebar = styled.aside`
     font-size: 17px;
     padding-top: 25px;
     padding-bottom: 22px;
-
-    &:hover .hide {
-      display: block;
-    }
-  }
-
-  .hide {
-    display: none;
   }
 `;
 
 const StyledDiv = styled.div`
   border-bottom: 1px solid #d8d8d8;
+  display: flex;
+  justify-content: space-between;
 
   .error {
     border: 2px solid #ff6600;
+  }
+
+  & div {
+    width: 100%;
+  }
+
+  :hover .hide {
+    display: block;
+  }
+
+  .hide {
+    display: none;
   }
 `;
 
