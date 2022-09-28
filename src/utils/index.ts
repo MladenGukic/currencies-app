@@ -3,7 +3,7 @@ export interface Currency {
   currencyCode: string;
   currencySymbol: string;
 }
-//Pull out to Utils file
+
 export const uniqueChecker = (arr: Currency[], val?: string) => {
   const userExists = arr.some((curr) => {
     return curr.currencyCode === val?.toUpperCase();

@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Currency } from "../models/currency";
 import { DUMMY_CURRENCIES } from "../dummy-currencies";
+import {
+  deleteCurrency,
+  getCurrencies,
+  postCurrency,
+  putCurrencies,
+  updateCurrency,
+} from "../services/localStorageServices";
 
 type CurrenciesContextObject = {
   currencies: Currency[];
@@ -24,31 +31,33 @@ export const CurrenciesContext = React.createContext<CurrenciesContextObject>({
 });
 
 export const CurrenciesContextProvider = (props: CurrenciesProps) => {
-  const [currencies, setCurrencies] = useState<Currency[]>(
-    JSON.parse(localStorage.getItem("currencies") || "[]"),
-  );
+  const [currencies, setCurrencies] = useState<Currency[]>(getCurrencies());
 
-
-  const storeInLocalStorage = (newCurrencies: Currency[]) => {
-    localStorage.setItem("currencies", JSON.stringify(newCurrencies));
-    return JSON.parse(localStorage.getItem("currencies") || "[]");
+  const storeInLocalStorage = (newCurrencies: Currency[]): Currency[] => {
+    putCurrencies(newCurrencies);
+    return getCurrencies();
   };
 
-  const addCurrencyHandler = (currencyCode: string, currencySymbol: string) => {
+  const addCurrencyHandler = (
+    currencyCode: string,
+    currencySymbol: string,
+  ): void => {
     const newCurrency = new Currency(
       currencyCode.toUpperCase(),
       currencySymbol,
     );
 
-    setCurrencies((prevCurrencies) => {
-      const newCurrencies = prevCurrencies.concat(newCurrency);
+    setCurrencies(() => {
+      postCurrency(newCurrency);
+      const newCurrencies = getCurrencies();
       return storeInLocalStorage(newCurrencies);
     });
   };
 
   const removeCurrencyHandler = (id: string) => {
-    setCurrencies((prevCurrencies) => {
-      const newCurrencies = prevCurrencies.filter((curr) => curr.id !== id);
+    setCurrencies(() => {
+      deleteCurrency(id);
+      const newCurrencies = getCurrencies();
       return storeInLocalStorage(newCurrencies);
     });
   };
@@ -57,14 +66,9 @@ export const CurrenciesContextProvider = (props: CurrenciesProps) => {
     id: string;
     currencyCode: string;
     currencySymbol: string;
-  }) => {
-    let newCurrencies = currencies.map((curr) => {
-      if (curr.id === currency.id) {
-        return currency;
-      }
-      return curr;
-    });
-    localStorage.setItem("currencies", JSON.stringify(newCurrencies));
+  }): void => {
+    updateCurrency(currency);
+    const newCurrencies = getCurrencies();
     setCurrencies(newCurrencies);
   };
 

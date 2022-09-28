@@ -1,17 +1,13 @@
-import { FC } from "react";
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { CurrenciesContext } from "../store/currencies-context";
 import { Currency } from "../utils";
 
-type SidebarCurrenciesProps = {
-  currencies: Currency[];
-  removeCurrency: (id: string) => void;
-};
-
-export const SidebarCurrencies: FC<SidebarCurrenciesProps> = (props) => {
-  const { currencies, removeCurrency } = props;
+export const SidebarCurrencies = () => {
+  const { currencies, removeCurrency } = useContext(CurrenciesContext);
   const navigate = useNavigate();
-  const navigateToEdit = (id: string) =>
+  const navigateToEdit = (id: string): void =>
     navigate(`/currencies/edit/${id}`, { replace: true });
   return (
     <Sidebar>
@@ -54,6 +50,14 @@ const Sidebar = styled.aside`
     padding-top: 25px;
     padding-bottom: 22px;
   }
+
+  &:hover .hide {
+    display: block;
+  }
+
+  .hide {
+    display: none;
+  }
 `;
 
 const StyledDiv = styled.div`
@@ -67,14 +71,6 @@ const StyledDiv = styled.div`
 
   & div {
     width: 100%;
-  }
-
-  :hover .hide {
-    display: block;
-  }
-
-  .hide {
-    display: none;
   }
 `;
 

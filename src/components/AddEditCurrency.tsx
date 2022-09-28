@@ -1,27 +1,21 @@
-import { useEffect, useState, FC } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useFormik } from "formik";
+import { CurrenciesContext } from "../store/currencies-context";
 import * as Yup from "yup";
 import styled from "styled-components";
 import { uniqueChecker } from "../utils";
 import { useParams } from "react-router-dom";
-import { Currency } from "../models/currency";
 
-type AddEditCurrencyProps = {
-  currencies: Currency[];
-  addCurrency: (currencyCode: string, currencySymbol: string) => void;
-  editCurrency: (currency: Currency) => void;
-};
-
-export const AddEditCurrency: FC<AddEditCurrencyProps> = (props) => {
-  const { currencies, addCurrency, editCurrency } = props;
+export const AddEditCurrency = () => {
+  const { currencies, addCurrency, editCurrency } =
+    useContext(CurrenciesContext);
   const { id } = useParams();
-  const isEditing = id !== undefined;
-
+  const isEditing = !!id;
   const [editingCurrency, setEditingCurrency] = useState(
     currencies?.find((curr) => curr.id === id),
   );
 
-  const resetInputs = () => {
+  const resetInputs = (): void => {
     values.currencyCode = "";
     values.currencySymbol = "";
   };
