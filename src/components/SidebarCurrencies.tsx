@@ -1,14 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Currency } from "../utils";
-import { useSelector } from "react-redux";
-import { State } from "../state";
+import { useDispatch, useSelector } from "react-redux";
+import { actionCreators, State } from "../state";
+import { bindActionCreators } from "@reduxjs/toolkit";
 
 export const SidebarCurrencies = () => {
+  const dispatch = useDispatch();
   const currencies = useSelector((state: State) => state.currenciesReducer);
-  const removeCurrency = (id: string) => {
-    return id;
-  };
+  const { removeCurrency } = bindActionCreators(actionCreators, dispatch);
   const navigate = useNavigate();
   const navigateToEdit = (id: string) =>
     navigate(`/currencies/edit/${id}`, { replace: true });

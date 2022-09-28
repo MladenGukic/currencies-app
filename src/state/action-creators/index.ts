@@ -11,3 +11,12 @@ export const addCurrency = (currency: Currency) => {
     });
   };
 };
+
+export const removeCurrency = (id: string) => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.REMOVE,
+      payload: id,
+    });
+  };
+};
