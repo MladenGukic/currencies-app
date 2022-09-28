@@ -1,13 +1,16 @@
-import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { CurrenciesContext } from "../store/currencies-context";
 import { Currency } from "../utils";
+import { useSelector } from "react-redux";
+import { State } from "../state";
 
 export const SidebarCurrencies = () => {
-  const { currencies, removeCurrency } = useContext(CurrenciesContext);
+  const currencies = useSelector((state: State) => state.currenciesReducer);
+  const removeCurrency = (id: string) => {
+    return id;
+  };
   const navigate = useNavigate();
-  const navigateToEdit = (id: string): void =>
+  const navigateToEdit = (id: string) =>
     navigate(`/currencies/edit/${id}`, { replace: true });
   return (
     <Sidebar>

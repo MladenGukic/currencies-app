@@ -1,21 +1,26 @@
-import { useContext, useEffect, useState } from "react";
 import { useFormik } from "formik";
-import { CurrenciesContext } from "../store/currencies-context";
 import * as Yup from "yup";
 import styled from "styled-components";
 import { uniqueChecker } from "../utils";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators, State } from "../state";
+import { useEffect, useState } from "react";
+import { Currency } from "../models/currency";
 
 export const AddEditCurrency = () => {
-  const { currencies, addCurrency, editCurrency } =
-    useContext(CurrenciesContext);
+  const dispatch = useDispatch();
+  const { addCurrency } = bindActionCreators(actionCreators, dispatch);
+  const currencies = useSelector((state: State) => state.currenciesReducer);
   const { id } = useParams();
-  const isEditing = !!id;
+  const isEditing = id !== undefined;
+
   const [editingCurrency, setEditingCurrency] = useState(
     currencies?.find((curr) => curr.id === id),
   );
 
-  const resetInputs = (): void => {
+  const resetInputs = () => {
     values.currencyCode = "";
     values.currencySymbol = "";
   };
@@ -40,14 +45,18 @@ export const AddEditCurrency = () => {
     },
     onSubmit: () => {
       if (!isEditing) {
-        addCurrency(values.currencyCode, values.currencySymbol);
+        const newCurrency = new Currency(
+          values.currencyCode,
+          values.currencySymbol,
+        );
+        addCurrency(newCurrency);
         resetInputs();
-      } else {
-        editCurrency({
-          id: id,
-          currencyCode: values.currencyCode.toUpperCase(),
-          currencySymbol: values.currencySymbol,
-        });
+        // } else {
+        //   editCurrency({
+        //     id: id,
+        //     currencyCode: values.currencyCode.toUpperCase(),
+        //     currencySymbol: values.currencySymbol,
+        //   });
         resetInputs();
       }
     },
