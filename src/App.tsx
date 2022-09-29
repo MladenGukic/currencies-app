@@ -2,14 +2,12 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { SplitHeader } from "./components/SplitHeader";
 import { AddEditCurrency } from "./components/AddEditCurrency";
 import { SidebarCurrencies } from "./components/SidebarCurrencies";
-import { CurrenciesContextProvider } from "./store/currencies-context";
 import styled, { createGlobalStyle } from "styled-components";
 
 function App() {
   return (
-    <CurrenciesContextProvider>
+    <>
       <SplitHeader />
-
       <ContentWrapper>
         <SidebarCurrencies />
         <Routes>
@@ -20,7 +18,7 @@ function App() {
       </ContentWrapper>
 
       <GlobalStyle />
-    </CurrenciesContextProvider>
+    </>
   );
 }
 

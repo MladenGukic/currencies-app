@@ -49,7 +49,7 @@ export const AddEditCurrency = () => {
     onSubmit: () => {
       if (!isEditing) {
         const newCurrency = new Currency(
-          values.currencyCode,
+          values.currencyCode.toUpperCase(),
           values.currencySymbol,
         );
         addCurrency(newCurrency);
