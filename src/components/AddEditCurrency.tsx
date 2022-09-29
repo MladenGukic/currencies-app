@@ -11,10 +11,13 @@ import { Currency } from "../models/currency";
 
 export const AddEditCurrency = () => {
   const dispatch = useDispatch();
-  const { addCurrency } = bindActionCreators(actionCreators, dispatch);
+  const { addCurrency, editCurrency } = bindActionCreators(
+    actionCreators,
+    dispatch,
+  );
   const currencies = useSelector((state: State) => state.currenciesReducer);
   const { id } = useParams();
-  const isEditing = id !== undefined;
+  const isEditing = !!id;
 
   const [editingCurrency, setEditingCurrency] = useState(
     currencies?.find((curr) => curr.id === id),
@@ -51,12 +54,12 @@ export const AddEditCurrency = () => {
         );
         addCurrency(newCurrency);
         resetInputs();
-        // } else {
-        //   editCurrency({
-        //     id: id,
-        //     currencyCode: values.currencyCode.toUpperCase(),
-        //     currencySymbol: values.currencySymbol,
-        //   });
+      } else {
+        editCurrency({
+          id: id,
+          currencyCode: values.currencyCode.toUpperCase(),
+          currencySymbol: values.currencySymbol,
+        });
         resetInputs();
       }
     },

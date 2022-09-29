@@ -20,3 +20,12 @@ export const removeCurrency = (id: string) => {
     });
   };
 };
+
+export const editCurrency = (currency: Currency) => {
+  return (dispatch: Dispatch<Action>) => {
+    dispatch({
+      type: ActionType.EDIT,
+      payload: currency,
+    });
+  };
+};

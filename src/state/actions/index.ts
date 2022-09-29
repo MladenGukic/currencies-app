@@ -11,4 +11,9 @@ interface RemoveAction {
   payload: string;
 }
 
-export type Action = AddAction | RemoveAction;
+interface EditAction {
+  type: ActionType.EDIT;
+  payload: Currency;
+}
+
+export type Action = AddAction | RemoveAction | EditAction;

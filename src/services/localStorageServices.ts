@@ -22,11 +22,8 @@ export const deleteCurrency = (id: string): void => {
 
 export const updateCurrency = (currency: Currency): void => {
   let oldCurrencies = getCurrencies();
-  let newCurrencies = oldCurrencies.map((curr) => {
-    if (curr.id === currency.id) {
-      return currency;
-    }
-    return curr;
-  });
+  let newCurrencies = oldCurrencies.map((curr) =>
+    curr.id === currency.id ? currency : curr,
+  );
   putCurrencies(newCurrencies);
 };
