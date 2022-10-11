@@ -89,7 +89,7 @@ export const AddEditCurrency = () => {
   return (
     <AddEditForm onSubmit={handleSubmit}>
       <Title>{isEditing ? "Edit Currency" : "Add Currency"}</Title>
-      <StyledDiv>
+      <InputWrapper>
         <Label>Currency Code</Label>
         <Input
           name="currencyCode"
@@ -101,8 +101,8 @@ export const AddEditCurrency = () => {
         {!isValid && touched.currencyCode && (
           <Error> {errors.currencyCode} </Error>
         )}
-      </StyledDiv>
-      <StyledDiv>
+      </InputWrapper>
+      <InputWrapper>
         <Label>Currency symbol</Label>
         <Input
           name="currencySymbol"
@@ -114,15 +114,14 @@ export const AddEditCurrency = () => {
         {!isValid && touched.currencySymbol && (
           <Error> {errors.currencySymbol} </Error>
         )}
-      </StyledDiv>
+      </InputWrapper>
       <Button type="submit">{isEditing ? "SAVE" : "SUBMIT"}</Button>
     </AddEditForm>
   );
 };
 
-const StyledDiv = styled.div`
+const InputWrapper = styled.div`
   border-bottom: 1px solid #d8d8d8;
-
   .error {
     border: 2px solid #ff6600;
   }
@@ -167,7 +166,6 @@ const Button = styled.button`
   font-weight: 500;
   margin-top: 12px;
   text-transform: uppercase;
-  margin-left: auto;
 `;
 
 const Error = styled.p`

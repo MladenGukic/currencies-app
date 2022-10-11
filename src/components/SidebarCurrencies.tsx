@@ -16,7 +16,7 @@ export const SidebarCurrencies = () => {
     <Sidebar>
       <Title>Currency List</Title>
       {currencies.map((currency: Currency) => (
-        <StyledDiv key={currency.id}>
+        <CurrencyWrapper key={currency.id}>
           <div
             className="listElement"
             onClick={() => navigateToEdit(currency.id)}
@@ -29,14 +29,14 @@ export const SidebarCurrencies = () => {
           >
             Delete
           </DeleteButton>
-        </StyledDiv>
+        </CurrencyWrapper>
       ))}
-      <StyledDiv className="listElement">
+      <CurrencyWrapper className="listElement">
         <StyledLink to={"currencies/add"}>
           <Circle disabled>+</Circle>
           ADD CURRENCY
         </StyledLink>
-      </StyledDiv>
+      </CurrencyWrapper>
     </Sidebar>
   );
 };
@@ -63,7 +63,7 @@ const Sidebar = styled.aside`
   }
 `;
 
-const StyledDiv = styled.div`
+const CurrencyWrapper = styled.div`
   border-bottom: 1px solid #d8d8d8;
   display: flex;
   justify-content: space-between;
