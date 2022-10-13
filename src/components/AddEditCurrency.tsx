@@ -8,6 +8,7 @@ import { bindActionCreators } from "redux";
 import { actionCreators, State } from "../state";
 import { useEffect, useState } from "react";
 import { Currency } from "../models/currency";
+import { SubmitButton } from "./SubmitButton";
 
 export const AddEditCurrency = () => {
   const dispatch = useDispatch();
@@ -115,7 +116,9 @@ export const AddEditCurrency = () => {
           <Error> {errors.currencySymbol} </Error>
         )}
       </InputWrapper>
-      <Button type="submit">{isEditing ? "SAVE" : "SUBMIT"}</Button>
+      <SubmitButton primary={true}>
+        {isEditing ? "SAVE" : "SUBMIT"}
+      </SubmitButton>
     </AddEditForm>
   );
 };
@@ -154,18 +157,6 @@ const Input = styled.input`
   width: 430px;
   margin-bottom: 12px;
   margin-top: 12px;
-`;
-
-const Button = styled.button`
-  width: 160px;
-  height: 40px;
-  color: white;
-  background-color: #ff6600;
-  border: none;
-  border-radius: 5px;
-  font-weight: 500;
-  margin-top: 12px;
-  text-transform: uppercase;
 `;
 
 const Error = styled.p`
